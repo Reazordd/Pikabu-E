@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
-
+from .forms import PostUpdateForm
 
 def get_post_list(request):
     posts = Post.objects.all()
@@ -41,3 +41,16 @@ def update_post(request, post_id):
         post.text = request.POST.get('text', post.text)
         post.save()
         return redirect('post_detail', post_id=post.id)
+
+def update_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == "POST":
+        form = PostUpdateForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', post_id=post.id)
+    else:
+        form = PostUpdateForm(instance=post)
+
+    return render(request, 'blog/post_edit.html', {'form': form, 'post': post})
