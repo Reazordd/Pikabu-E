@@ -3,10 +3,21 @@
 {% block title %}{{ post.title }}{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'post_list' %}">&larr;Назад</a>
-    <h1>Детали поста</h1>
-    <h2>Идентификатор поста: {{ post.id }}</h2>
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.text }}</p>
-    <p>{{ post.created_at }}</p>
+    <div class="container">
+        <a href="{% url 'post_list' %}" class="btn btn-outline-secondary mb-3">&larr; Назад к списку</a>
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h2 mb-0">{{ post.title }}</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ post.text }}</p>
+            </div>
+            <div class="card-footer text-muted">
+                Дата создания: {{ post.created_at|date:"d.m.Y H:i" }}
+            </div>
+        </div>
+        <div class="mt-3">
+            <a href="{% url 'update_post' post.id %}" class="btn btn-primary">Редактировать</a>
+        </div>
+    </div>
 {% endblock content %}

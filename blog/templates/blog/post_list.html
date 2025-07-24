@@ -3,18 +3,26 @@
 {% block title %}Список постов{% endblock title %}
 
 {% block content %}
-    <h1>Список постов сайта</h1>
+    <div class="container">
+        <h1 class="mb-4">Список постов сайта</h1>
 
-    {# Отображение постов #}
-    {% if posts %}
-        {% for post in posts %}
-            <div class="post-container" style="border: 1px solid black; margin-bottom: 10px; padding: 15px;">
-                <h2>Заголовок поста: <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
-                <p>Текст поста: {{ post.text }}</p>
-                <small>Дата создания поста: {{ post.created_at|date:"d.m.Y H:i" }}</small>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>Постов ещё нет. Загляните позже!</p>
-    {% endif %}
-{% endblock content %}
+        {% if posts %}
+            {% for post in posts %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2 class="card-title h4">
+                            <a href="{% url 'post_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a>
+                        </h2>
+                        <p class="card-text">{{ post.text|truncatewords:30 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Дата создания: {{ post.created_at|date:"d.m.Y H:i" }}</small>
+                            <a href="{% url 'update_post' post.id %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">Постов ещё нет. Загляните позже!</div>
+        {% endif %}
+    </div>
+{% endblock content %}}

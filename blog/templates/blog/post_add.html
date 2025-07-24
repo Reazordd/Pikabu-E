@@ -3,21 +3,29 @@
 {% block title %}Создать пост{% endblock title %}
 
 {% block content %}
-    <h1>Создать новый пост</h1>
-
-    <form method="POST">
-        {% csrf_token %}
-
-        <div>
-            <label for="titleInput">Заголовок поста:</label>
-            <input id="titleInput" name="title" type="text" placeholder="заголовок (максимальная длина 200 символов)" required>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 mb-0">Создать новый пост</h1>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="titleInput" class="form-label">Заголовок поста</label>
+                            <input type="text" class="form-control" id="titleInput" name="title"
+                                   placeholder="Заголовок (максимальная длина 200 символов)" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="textInput" class="form-label">Текст поста</label>
+                            <textarea class="form-control" id="textInput" name="text" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Создать</button>
+                        <a href="{% url 'post_list' %}" class="btn btn-secondary">Отмена</a>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <label for="textInput">Текст поста:</label>
-            <textarea id="textInput" name="text" rows="3"></textarea>
-        </div>
-
-        <button type="submit">Создать</button>
-    </form>
+    </div>
 {% endblock content %}
