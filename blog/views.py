@@ -1,7 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostUpdateForm
+from django.contrib.auth import login
+from django.contrib import messages
+from .forms import RegisterForm
 
+def register_view(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Регистрация прошла успешно!')
+            return redirect('register_success')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'blog/register.html', {'form': form})
+
+def register_success_view(request):
+    return render(request, 'blog/register_success.html')
 def get_post_list(request):
     posts = Post.objects.all()
 

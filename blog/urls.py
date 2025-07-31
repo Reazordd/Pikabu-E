@@ -1,6 +1,9 @@
 from django.urls import path
 from .views import get_post_list, get_post_detail, create_post, login_view, \
     update_post  # Импортируем новое представление
+from .views import register_view, register_success_view
+from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     path("posts/", get_post_list, name="post_list"),
@@ -8,4 +11,7 @@ urlpatterns = [
     path('posts/add/', create_post, name="new_post"),
     path('login/', login_view, name="login"),
     path('posts/<int:post_id>/edit/', update_post, name="update_post"),
+    path('register/', register_view, name='register'),
+    path('register/success/', register_success_view, name='register_success'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]
